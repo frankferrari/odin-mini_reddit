@@ -12,12 +12,14 @@ end
     end
 
 
-
 class User < ActiveRecord::Base
     username:string [unique, 4-12 chars, present]
     email:string [unique, present]
-
     has_one Profile, dependent: :destroy
+    
+    has_many Pins
+    has_many Links
+    has_many Courses
 end
 
     class Profile < ActiveRecord::Base
@@ -29,7 +31,7 @@ end
     end
 
         class Country < ActiveRecord::Base
-            country::string
+            country:string
             belongs_to Profile  profile_id:integer
             has_many States
         end
@@ -49,7 +51,8 @@ end
 
 class Pin < ActiveRecord::Base
     url:string [present]
-    image:file  [present]
+    image:file [present]
+    belongs_to User
     has_many Comments, dependent: :destroy
 end
  
@@ -59,9 +62,9 @@ end
     end
 
 
-
-class Message < ActiveRecord::Base
+class Link < ActiveRecord::Base
     url:string [present] 
+    belongs_to User
     has_many Comments, dependent: :destroy
 end
 
